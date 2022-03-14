@@ -1,13 +1,15 @@
 import {combineReducers, createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
-import { initialState } from './initialState';
-import { reducer as postsReducer } from './postsRedux';
+import initialState from './initialState';
+import postsReducer from './postsRedux';
+import userReducer from './userRedux';
 
 // define reducers
 const reducers = {
   posts: postsReducer,
+  user: userReducer,
 };
 
 // add blank reducers for initial state properties without reducers
@@ -20,10 +22,10 @@ Object.keys(initialState).forEach(item => {
 const combinedReducers = combineReducers(reducers);
 
 // create store
-export const store = createStore(
+const store = createStore(
   combinedReducers,
   initialState,
-  composeWithDevTools(
-    applyMiddleware(thunk)
-  )
+  composeWithDevTools(applyMiddleware(thunk)),
 );
+
+export {store};

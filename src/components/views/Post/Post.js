@@ -1,37 +1,33 @@
+import {connect} from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {getPostById} from '../../../redux/postsRedux';
+import {withRouter} from '../../../utils/utils';
 
-import clsx from 'clsx';
+import {PostContent} from '../../features/PostContent/PostContent';
+import styles from './Post.module.scss';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './Post.module.scss';
-
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>Post</h2>
-    {children}
+const Component = ( {post} ) => (
+  <div className={styles.root}>
+    <PostContent post={post} />
   </div>
 );
 
 Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+  post: PropTypes.shape({}).isRequired,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = (state, {router}) => ({
+  post: getPostById(state, router.params.id),
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = withRouter(connect(mapStateToProps)(Component));
 
 export {
-  Component as Post,
-  // Container as Post,
+  //Component as Post,
+  Container as Post,
   Component as PostComponent,
 };
