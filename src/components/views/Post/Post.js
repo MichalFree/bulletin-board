@@ -1,30 +1,39 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getPostById} from '../../../redux/postsRedux';
-import {withRouter} from '../../../utils/utils';
-
-import {PostContent} from '../../features/PostContent/PostContent';
+import { getPost, fetchPostById } from '../../../redux/postsRedux';
+import { PostContent } from '../../features/PostContent/PostContent';
 import styles from './Post.module.scss';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-const Component = ( {post} ) => (
-  <div className={styles.root}>
-    <PostContent post={post} />
-  </div>
-);
+const Component = ({ post, fetchOnePost }) => {
+  console.log(post);
 
-Component.propTypes = {
-  post: PropTypes.shape({}).isRequired,
+  fetchOnePost();
+
+  return (
+    <div className={styles.root}>
+      {post && <PostContent post={post} />}
+    </div>
+  );
 };
 
-const mapStateToProps = (state, {router}) => ({
-  post: getPostById(state, router.params.id),
+Component.propTypes = {
+  post: PropTypes.object.isRequired,
+  className: PropTypes.string,
+  params: PropTypes.object,
+  fetchOnePost: PropTypes.func,
+};
+
+const mapStateToProps = (state, props) => ({
+  post: getPost(state),
 });
 
-const Container = withRouter(connect(mapStateToProps)(Component));
+const mapDispatchToProps = (dispatch, props) => ({
+  fetchOnePost: () => dispatch(fetchPostById(props.match.params.id)),
+});
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   //Component as Post,

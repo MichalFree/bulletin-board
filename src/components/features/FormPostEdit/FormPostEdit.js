@@ -1,23 +1,25 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {formatDate} from '../../../utils/utils';
+import { formatDate } from '../../../utils/utils';
+// import { useNavigate } from 'react-router-dom';
 
-import {Grid, TextField, Box, Button} from '@mui/material';
+import { Grid, TextField, Box, Button } from '@mui/material';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './FormPostEdit.module.scss';
 
-function Component({post, sendForm}) {
+function Component({ post, sendForm }) {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
   const [location, setLocation] = useState();
+  //  const navigate = useNavigate();
 
   const handleSubmit = event => {
     event.preventDefault();
-    const {author, id, publicationDate} = post;
+    const { author, id, publicationDate } = post;
     const today = formatDate.DDMMYYYY(new Date());
     sendForm({
       id,
@@ -30,6 +32,7 @@ function Component({post, sendForm}) {
       lastUpdate: today,
       status: event.target.id,
     });
+    //    navigate(`/post/${id}`, { state: { prevAction: `Post ${title} has been changed` } });
   };
 
   return (

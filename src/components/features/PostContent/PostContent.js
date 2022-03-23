@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Box, Grid, Card, CardMedia, CardContent, Typography, ListItem, List} from '@mui/material';
-import {PostButtons} from '../PostButtons/PostButtons';
+import { Box, Grid, Card, CardMedia, CardContent, Typography, ListItem, List } from '@mui/material';
+import { PostButtons } from '../PostButtons/PostButtons';
 
-function Component({post}) {
+function Component({ post }) {
   const {
     author,
     description,
@@ -50,10 +50,10 @@ function Component({post}) {
                 </Typography>
               ) : null}
             </Box>
-            <CardContent sx={{flexGrow: 1}}>{description}</CardContent>
+            <CardContent sx={{ flexGrow: 1 }}>{description}</CardContent>
             <List>
               <ListItem>
-                <Typography variant="caption">Contact: {author.email}</Typography>
+                <Typography variant="caption">Contact: {author}</Typography>
               </ListItem>
               <ListItem>
                 <Typography variant="caption">Last Update: {lastUpdate}</Typography>
@@ -63,9 +63,10 @@ function Component({post}) {
           <Grid item xs={12} sm={4} md={3}>
             <CardMedia component="img" src={image} alt="PostContent image example" />
             <CardMedia component="img" src={image2} alt="PostContent image example" />
+            {/* <CardMedia component="img" src={photo} alt="PostContent image example" /> */}
           </Grid>
         </Grid>
-        <PostButtons post={post} />
+        {/* <PostButtons post={post} /> */}
       </Card>
       {/* </Badge> */}
     </div>
@@ -74,20 +75,19 @@ function Component({post}) {
 
 Component.propTypes = {
   post: PropTypes.shape({
-    author: PropTypes.shape({
-      email: PropTypes.string.isRequired,
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    author: PropTypes.string,
+    _id: PropTypes.string.isRequired,
+    description: PropTypes.string,
     lastUpdate: PropTypes.string.isRequired,
     publicationDate: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     image: PropTypes.string,
     image2: PropTypes.string,
+    // photo: PropTypes.string,
     price: PropTypes.string,
     location: PropTypes.string,
   }).isRequired,
 };
 
-export {Component as PostContent};
+export { Component as PostContent };
