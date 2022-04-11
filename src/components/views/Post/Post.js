@@ -9,8 +9,13 @@ import styles from './Post.module.scss';
 const Component = ({ post, fetchOnePost }) => {
   console.log(post);
 
-  fetchOnePost();
-
+  useEffect(() => {
+  
+    return () => {
+      fetchOnePost();
+    };
+  });
+  
   return (
     <div className={styles.root}>
       {post && <PostContent post={post} />}
